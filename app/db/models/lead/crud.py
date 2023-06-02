@@ -1,5 +1,3 @@
-from typing import Any
-
 from fastapi import Depends
 from sqlalchemy import insert
 from sqlalchemy.exc import SQLAlchemyError
@@ -8,7 +6,6 @@ from sqlalchemy.orm import Session
 from app.core import exceptions as exc
 from app.db.crud_base import CRUDBase
 from app.db.get_session import get_db
-from app.db.models.lead.lead import Lead
 from app.schema import lead_schema
 
 from .lead import Lead

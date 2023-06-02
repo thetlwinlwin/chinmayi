@@ -27,6 +27,7 @@ app = FastAPI(
 )
 
 app.include_router(v1.suite_crm_router)
+app.include_router(v1.crypto_router)
 
 
 @app.get("/", response_model=None)

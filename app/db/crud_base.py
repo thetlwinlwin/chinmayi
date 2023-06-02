@@ -79,7 +79,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> list[ModelType]:
         try:
             results = self._db_session.scalars(select(self.model)).all()
-            print(f"result is {results}")
             if results is None:
                 raise exc.NotFound()
             return results

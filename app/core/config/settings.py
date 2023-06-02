@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     api_password: str
     api_url: HttpUrl
     module_name: str
+    crypto_base_url: HttpUrl
+    crypto_api_key: str
     db_hostname: str
     db_port: int
     db_password: str

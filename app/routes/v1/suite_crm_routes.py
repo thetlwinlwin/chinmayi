@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
-from app.core.settings import app_settings
+from app.core.config import app_settings
 from app.core.suite_crm.SuiteCrm import SuiteCrm
 from app.db.models import lead as service
 from app.schema import lead_schema
@@ -19,7 +19,7 @@ def get_all_leads(
     return suite_crud.get_all()
 
 
-@suite_crm_router.get("/fetch")
+@suite_crm_router.get("/save-all")
 def save_all_leads(
     suite_crud: service.LeadCrud = Depends(service.get_lead_crud),
 ):

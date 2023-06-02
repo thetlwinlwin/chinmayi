@@ -88,3 +88,16 @@ class Unprocessable(AppException):
             status.HTTP_422_UNPROCESSABLE_ENTITY,
             headers,
         )
+
+
+class TooManyRequest(AppException):
+    def __init__(
+        self,
+        details: str = "Too Many Requests",
+        headers: dict[str, str] = None,
+    ) -> None:
+        super().__init__(
+            details,
+            status.HTTP_429_TOO_MANY_REQUESTS,
+            headers,
+        )
