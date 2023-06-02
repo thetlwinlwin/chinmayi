@@ -33,9 +33,8 @@ def get_data(
 
 @crypto_router.post(
     "/save-all",
-    response_model=list[crypto_schema.CryptoHistoryCreate],
 )
-def save_all_leads(
+def save_all_data(
     crypto: config.CryptoList,
     currency: config.CurrencyList,
     time_args: crypto_schema.TimeConfigBody,
@@ -46,8 +45,21 @@ def save_all_leads(
         crypto_api_key=config.app_settings.crypto_api_key,
     )
 
-    return crypto_obj.get_rate_history(
+    results = crypto_obj.get_rate_history(
         crypto=crypto,
         to=currency,
         time_args=time_args,
+    )
+    objs_to_save = list(
+        map(
+            lambda x: x.convert_to_db_type(
+                crypto=crypto,
+                currency=currency,
+            ),
+            results,
+        )
+    )
+    crypto_crud.save_all(objs_to_save)
+    return JSONResponse(
+        status_code=status.HTTP_201_CREATED, content={"message": "saved"}
     )

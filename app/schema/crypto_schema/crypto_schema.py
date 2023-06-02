@@ -60,7 +60,7 @@ class CryptoHistoryBase(BaseModel):
         return CryptoDbIn(
             from_crypto=crypto,
             to_currency=currency,
-            rate_close=self.rate_close,
+            rate=self.rate_close,
             time=self.time_close,
         )
 

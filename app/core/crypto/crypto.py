@@ -33,7 +33,8 @@ class Crypto:
         self, crypto: currency_list.CryptoList, to: currency_list.CurrencyList
     ) -> crypto_schema.CryptoToCurrency:
         url = f"{self._base_url}/{crypto.value}/{to.value}/"
-        return self._call(url)
+        result = self._call(url)
+        return crypto_schema.CryptoToCurrency.parse_obj(result)
 
     def get_rate_history(
         self,
@@ -42,4 +43,5 @@ class Crypto:
         time_args: crypto_schema.TimeConfigBody,
     ) -> list[crypto_schema.CryptoHistoryCreate]:
         url = f"{self._base_url}/{crypto.value}/{to.value}/history"
-        return self._call(url, time_args.get_args)
+        results = self._call(url, time_args.get_args)
+        return list(map(crypto_schema.CryptoHistoryCreate.parse_obj, results))

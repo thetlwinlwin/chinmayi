@@ -16,8 +16,10 @@ class CryptoCrud(CRUDBase[Crypto, crypto_schema.CryptoDbIn, crypto_schema.Crypto
         super().__init__(model, db_session)
 
     def save_all(self, input_objs: list[crypto_schema.CryptoDbIn]) -> None:
+        input_objs = list(map(lambda x: x.dict(), input_objs))
         try:
             stmt = insert(self.model).values(input_objs)
+            print(stmt)
             self._db_session.execute(stmt)
             self._db_session.commit()
         except SQLAlchemyError as e:
