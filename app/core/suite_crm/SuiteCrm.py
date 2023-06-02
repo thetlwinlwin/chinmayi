@@ -1,7 +1,8 @@
 import hashlib
 import json
 from enum import Enum
-from urllib import parse, request
+
+import requests
 
 from app.schema import lead_schema
 
@@ -34,13 +35,11 @@ class SuiteCrm:
             "response_type": "json",
             "rest_data": json.dumps(arguments),
         }
+        response = requests.get(self._url, args)
 
-        params = parse.urlencode(args).encode("utf-8")
-        res = request.urlopen(self._url, params)
-        res = res.read().strip()
-        if not res:
+        if response.status_code != 200:
             raise Exception("something went wrong during fetching")
-        return json.loads(res.decode("utf-8"))
+        return response.json()
 
     def _get_session_id(self):
         args = {
